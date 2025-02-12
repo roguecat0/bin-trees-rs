@@ -1,3 +1,4 @@
+mod simple_tree;
 trait BinairyTree<T: PartialOrd + PartialEq> {
     fn insert(&mut self, item: T);
     fn search(&self, item: &T) -> &Self;
