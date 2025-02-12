@@ -5,15 +5,15 @@ trait BinairyTree<T: PartialOrd + PartialEq> {
 }
 
 #[derive(PartialEq)]
-enum BST<T: PartialOrd + PartialEq> {
+enum Bst<T: PartialOrd + PartialEq> {
     Cons {
         val: T,
-        left: Box<BST<T>>,
-        right: Box<BST<T>>,
+        left: Box<Bst<T>>,
+        right: Box<Bst<T>>,
     },
     Nil,
 }
-impl<T: PartialOrd + PartialEq> BST<T> {
+impl<T: PartialOrd + PartialEq> Bst<T> {
     fn new_with(val: T) -> Self {
         Self::Cons {
             val,
@@ -25,7 +25,7 @@ impl<T: PartialOrd + PartialEq> BST<T> {
         Self::Nil
     }
 }
-impl<T> BinairyTree<T> for BST<T>
+impl<T> BinairyTree<T> for Bst<T>
 where
     T: PartialEq + PartialOrd,
 {
@@ -65,57 +65,57 @@ mod tests {
 
     #[test]
     fn can_create() {
-        let bst: BST<u32> = BST::new();
-        assert!(bst == BST::Nil);
-        let cell = BST::new_with(3);
+        let bst: Bst<u32> = Bst::new();
+        assert!(bst == Bst::Nil);
+        let cell = Bst::new_with(3);
         assert!(
-            cell == BST::Cons {
+            cell == Bst::Cons {
                 val: 3,
-                left: Box::new(BST::Nil),
-                right: Box::new(BST::Nil),
+                left: Box::new(Bst::Nil),
+                right: Box::new(Bst::Nil),
             }
         );
     }
     #[test]
     fn can_insert() {
-        let mut bst: BST<u32> = BST::new();
-        assert!(bst == BST::Nil);
+        let mut bst: Bst<u32> = Bst::new();
+        assert!(bst == Bst::Nil);
         bst.insert(2);
         assert!(
-            bst == BST::Cons {
+            bst == Bst::Cons {
                 val: 2,
-                left: Box::new(BST::Nil),
-                right: Box::new(BST::Nil),
+                left: Box::new(Bst::Nil),
+                right: Box::new(Bst::Nil),
             }
         );
         bst.insert(1);
         assert!(
-            bst == BST::Cons {
+            bst == Bst::Cons {
                 val: 2,
-                left: Box::new(BST::new_with(1)),
-                right: Box::new(BST::Nil),
+                left: Box::new(Bst::new_with(1)),
+                right: Box::new(Bst::Nil),
             }
         );
     }
     #[test]
     fn can_search() {
-        let mut bst = BST::new_with(3);
+        let mut bst = Bst::new_with(3);
         bst.insert(5);
         bst.insert(6);
         bst.insert(7);
 
         let node = bst.search(&8);
-        assert!(node == &BST::Nil);
+        assert!(node == &Bst::Nil);
 
         let node = bst.search(&7);
-        assert!(node == &BST::new_with(7));
+        assert!(node == &Bst::new_with(7));
 
         let node = bst.search(&6);
         assert!(
-            node == &BST::Cons {
+            node == &Bst::Cons {
                 val: 6,
-                left: Box::new(BST::Nil),
-                right: Box::new(BST::new_with(7))
+                left: Box::new(Bst::Nil),
+                right: Box::new(Bst::new_with(7))
             }
         );
     }
